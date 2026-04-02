@@ -121,3 +121,7 @@ if __name__ == "__main__":
 
     result = build_code(example_sequence)
     print(result)
+
+## Vision
+
+Codeboard can be extended into a keyboard-like interface where users compose programs through valid structural inputs rather than free-form typing.
