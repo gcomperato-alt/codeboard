@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeBoard | Air Traffic Control for AI Agents</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Courier New", monospace;
+      background: #050807;
+      color: #9cff9c;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    .panel {
+      max-width: 980px;
+      margin: auto;
+      border: 2px solid #39ff88;
+      box-shadow: 0 0 28px rgba(57, 255, 136, 0.35);
+      border-radius: 18px;
+      padding: 28px;
+      background: radial-gradient(circle at center, #092015 0%, #050807 70%);
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      opacity: 0.85;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(32px, 7vw, 72px);
+      margin: 0;
+      letter-spacing: -3px;
+      color: #caffca;
+      text-shadow: 0 0 18px #39ff88;
+    }
+
+    .subtitle {
+      font-size: clamp(17px, 3vw, 24px);
+      color: #ffffff;
+      margin-top: 10px;
+      max-width: 760px;
+      line-height: 1.35;
+    }
+
+    .radar {
+      margin: 28px auto;
+      width: min(72vw, 420px);
+      aspect-ratio: 1;
+      border: 2px solid #39ff88;
+      border-radius: 50%;
+      position: relative;
+      background:
+        linear-gradient(rgba(57,255,136,0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57,255,136,0.12) 1px, transparent 1px);
+      background-size: 32px 32px;
+      overflow: hidden;
+    }
+
+    .radar::before {
+      content: "";
+      position: absolute;
+      inset: 50%;
+      width: 50%;
+      height: 2px;
+      background: #39ff88;
+      transform-origin: left center;
+      animation: sweep 4s linear infinite;
+      box-shadow: 0 0 16px #39ff88;
+    }
+
+    .ring {
+      position: absolute;
+      border: 1px solid rgba(57,255,136,0.35);
+      border-radius: 50%;
+      inset: 18%;
+    }
+
+    .ring.two {
+      inset: 35%;
+    }
+
+    .blip {
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 0 18px #39ff88;
+    }
+
+    .a { top: 26%; left: 33%; }
+    .b { top: 55%; left: 68%; }
+    .c { top: 70%; left: 41%; }
+
+    @keyframes sweep {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .card {
+      border: 1px solid #39ff88;
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.45);
+      min-height: 110px;
+    }
+
+    .card strong {
+      color: #ffffff;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .demo {
+      margin-top: 28px;
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(57,255,136,0.08);
+      border: 1px dashed #39ff88;
+      line-height: 1.55;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      margin-top: 20px;
+      background: #020403;
+      color: #caffca;
+      border: 1px solid #39ff88;
+      border-radius: 12px;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 14px;
+      background: #39ff88;
+      color: #031006;
+      border: none;
+      border-radius: 999px;
+      padding: 13px 22px;
+      font-weight: bold;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(57,255,136,0.45);
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .output {
+      margin-top: 18px;
+      white-space: pre-wrap;
+      color: #ffffff;
+      line-height: 1.5;
+    }
+
+    .footer {
+      margin-top: 24px;
+      font-size: 13px;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 760px) {
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="panel">
+      <div class="topline">
+        <span>CODEBOARD ATC // AGENT HANDOFF CONTROL</span>
+        <span>STATUS: EXPERIMENTAL</span>
+      </div>
+
+      <h1>CodeBoard</h1>
+
+      <p class="subtitle">
+        Air traffic control for AI agents. Route tasks, check handoffs, prevent context crashes.
+      </p>
+
+      <div class="radar">
+        <div class="ring"></div>
+        <div class="ring two"></div>
+        <div class="blip a"></div>
+        <div class="blip b"></div>
+        <div class="blip c"></div>
+      </div>
+
+      <div class="flow">
+        <div class="card">
+          <strong>1. Human Input</strong>
+          Messy request enters the tower.
+        </div>
+
+        <div class="card">
+          <strong>2. Prompt Clearance</strong>
+          CoThink-style refinement checks intent.
+        </div>
+
+        <div class="card">
+          <strong>3. Agent Routing</strong>
+          Research, writer, code or planner agent receives task.
+        </div>
+
+        <div class="card">
+          <strong>4. Safe Handoff</strong>
+          Output is checked before the next agent takes over.
+        </div>
+      </div>
+
+      <div class="demo">
+        <strong>Example:</strong><br />
+        User: “Plan my JB trip ah.”<br />
+        CodeBoard keeps the halal requirement, border timing, budget and transport context alive across agents.
+        No more agent forgetting the important bit halfway.
+      </div>
+
+      <textarea id="input" placeholder="Enter a task for the agent tower... Example: Plan my JB trip with halal food, low budget, and avoid long customs waits."></textarea>
+
+      <button onclick="sendTask()">CLEAR FOR TAKEOFF</button>
+
+      <div id="output" class="output"></div>
+
+      <div class="footer">
+        Built from canornot + CoThink logic: Human → Prompt → Agent → Agent → Output.
+      </div>
+    </section>
+  </main>
+
+  <script>
+    async function sendTask() {
+      const input = document.getElementById("input").value.trim();
+      const output = document.getElementById("output");
+
+      if (!input) {
+        output.textContent = "Tower says: enter a task first lah.";
+        return;
+      }
+
+      output.textContent = "Routing task through CodeBoard tower...";
+
+      try {
+        const response = await fetch("/api/agent", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ text: input })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          output.textContent = data.error || "Agent tower error.";
+          return;
+        }
+
+        output.textContent = data.result || "No result returned.";
+      } catch (error) {
+        output.textContent = "Connection failed. API route not responding.";
+      }
+    }
+  </script>
+</body>
+</html>
