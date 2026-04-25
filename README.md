@@ -4,7 +4,7 @@ Air Traffic Control for AI Agents
 <p align="center"> <img src="https://img.shields.io/badge/status-experimental-neon?style=for-the-badge" /> <img src="https://img.shields.io/badge/stack-vanilla%20JS%20%2B%20Vercel-black?style=for-the-badge" /> <img src="https://img.shields.io/badge/focus-agent%20coordination-00ff88?style=for-the-badge" /> </p>
 🎥 Demo
 
-👉 Live: [https://your-vercel-link.vercel.app](https://vercel.com/gcomperato-9969s-projects/codeboard)
+👉 Live: (https://vercel.com/gcomperato-9969s-projects/codeboard)
 
 (Replace with your actual link)
 
