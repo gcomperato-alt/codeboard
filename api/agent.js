@@ -1,0 +1,5 @@
+{
+  "name": "codeboard",
+  "version": "1.0.0",
+  "type": "module"
+}
